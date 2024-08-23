@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --primary-color: #ff8200; /* Tennessee Orange */
+  --primary-color-light: #ffa64d;
+  --primary-color-dark: #cc6600;
+
+  /* Secondary Colors */
+  --secondary-color: #58595b; /* Dark Gray */
+  --secondary-color-light: #7a7b7d;
+  --secondary-color-dark: #3a3b3c;
+
+  /* Accent Colors */
+  --accent-color: #ffffff; /* White */
+  --accent-color-light: #f2f2f2;
+  --accent-color-dark: #cccccc;
+
+  /* Background Colors */
+  --background-color: #ffffff; /* White */
+  --background-color-light: #f8f9fa;
+  --background-color-dark: #ecf0f1;
+
+  /* Text Colors */
+  --text-color: #58595b; /* Dark Gray */
+  --text-color-light: #7a7b7d;
+  --text-color-dark: #3a3b3c;
+
+  /* Border Colors */
+  --border-color: #dcdcdc;
+  --border-color-light: #eaeaea;
+  --border-color-dark: #bfbfbf;
+}
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded bg-primary opacity-15;
+}
+
+body {
+  @apply text-text bg-background;
+}
+
+a {
+  @apply text-primary;
+}
+
+a:hover {
+  @apply text-primary-dark;
+}
+
+input {
+  @apply border border-border p-2 rounded-sm;
+}
+
+button {
+  @apply bg-primary text-accent p-2 rounded-sm min-w-24;
+}
+
+button:hover {
+  @apply bg-primary-dark;
+}
+
+h1 {
+  @apply text-2xl font-bold text-text;
+}
+
+h3 {
+  @apply text-xl font-semibold text-text;
+}

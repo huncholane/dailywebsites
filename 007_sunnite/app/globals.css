@@ -107,3 +107,7 @@ tr:nth-child(even) {
 tr:hover {
   @apply bg-accent-dark;
 }
+
+.big-button {
+  @apply bg-secondary hover:bg-secondary-dark text-accent p-2 rounded-lg h-16 w-36;
+}

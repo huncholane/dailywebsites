@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex flex-col h-screen w-screen">
-          <div className="h-20 w-full flex justify-between shadow bg-primary p-4">
+          <div className="h-20 w-full flex justify-between shadow bg-primary p-4 sun-background">
             <h1 className="my-auto">Sun Nite</h1>
             <div className="flex gap-4">
               <a

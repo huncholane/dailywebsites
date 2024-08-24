@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   const contractAddress = "0x1234567890";
   return (
-    <div className="background-image p-8">
+    <div className="fortnite-background p-8">
       <h1 className="w-full text-center">Sun Nite</h1>
       <h3 className="w-full text-center mb-7">
         Official fortnite coin on Tron created by Soulja boy

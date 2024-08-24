@@ -32,14 +32,14 @@ export default function RootLayout({
               <a
                 className="my-auto text-accent hover:text-accent-dark"
                 target="_blank"
-                href="https://x.com/i/flow/login?redirect_after_login=%2FSunNite_TRX"
+                href="https://x.com/SunNite_TRX"
               >
                 <BsTwitter className="text-3xl" />
               </a>
               <a
                 className="my-auto text-accent mr-2 hover:text-accent-dark"
                 target="_blank"
-                href=""
+                href="https://t.me/SunNite_TRX"
               >
                 <BsTelegram className="text-3xl" />
               </a>

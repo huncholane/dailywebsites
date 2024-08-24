@@ -22,7 +22,7 @@ export default function RootLayout({
           <div className="h-20 w-full flex justify-center shadow bg-primary">
             <h1 className="my-auto">Sun Nite</h1>
           </div>
-          <div className="h-full w-full overflow-aut p-8">{children}</div>
+          <div className="h-full w-full overflow-auto p-8">{children}</div>
         </div>
       </body>
     </html>

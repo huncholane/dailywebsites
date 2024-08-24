@@ -129,3 +129,9 @@ tr:hover {
   @apply bg-secondary-dark text-accent-dark;
   text-decoration: none;
 }
+.background-image {
+  background-image: url("/background.webp");
+  background-size: cover; /* Ensures the image covers the entire element */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}

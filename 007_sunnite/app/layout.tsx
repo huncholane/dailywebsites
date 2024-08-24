@@ -40,13 +40,13 @@ export default function RootLayout({
               <a
                 href="big-button"
                 target="_blank"
-                className="my-auto text-accent text-accent hover:text-accent-dark bg-secondary no-underline border h-12 w-24 text-center flex justify-center rounded-lg"
+                className="my-auto text-accent hover:text-accent-dark bg-secondary no-underline border h-12 w-24 text-center flex justify-center rounded-lg"
               >
                 <div className="my-auto ">Buy Now</div>
               </a>
             </div>
           </div>
-          <div className="h-full w-full overflow-auto p-8">{children}</div>
+          <div className="h-full w-full overflow-auto">{children}</div>
         </div>
       </body>
     </html>

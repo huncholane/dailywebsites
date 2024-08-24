@@ -7,8 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 export default function Home() {
   const contractAddress = "0x1234567890";
   return (
-    <div>
-      <div className="flex w-full justify-center">
+    <div className="background-image p-8">
+      <h1 className="w-full text-center">Sun Nite</h1>
+      <h3 className="w-full text-center mb-7">
+        Official fortnite coin on Tron created by Soulja boy
+      </h3>
+      <div className="flex w-full justify-center mb-3">
         <iframe
           width="315"
           height="560"
@@ -29,6 +33,10 @@ export default function Home() {
             }}
           />
         </div>
+      </div>
+      <div className="mt-8">
+        <h1 className="w-full text-center">Tokenomics</h1>
+        <h3 className="w-full text-center">No sales tax</h3>
       </div>
       <ToastContainer />
     </div>

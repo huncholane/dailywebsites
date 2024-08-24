@@ -5,7 +5,7 @@ import { toast, ToastContainer } from "react-toast";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Home() {
-  const contractAddress = "0x1234567890";
+  const contractAddress = "TLepEDCmQi3oyK9DnPHmqJaN5FW5zZjcEu";
   return (
     <div className="fortnite-background p-8">
       <h1 className="w-full text-center">SunNite</h1>

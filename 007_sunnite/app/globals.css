@@ -3,31 +3,107 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+  /* Primary Colors */
+  --primary-color: #4b0082; /* Indigo */
+  --primary-color-light: #6a0dad;
+  --primary-color-dark: #2e0057;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  /* Secondary Colors */
+  --secondary-color: #9400d3; /* Dark Violet */
+  --secondary-color-light: #b300e6;
+  --secondary-color-dark: #660099;
+
+  /* Accent Colors */
+  --accent-color: #ffffff; /* White */
+  --accent-color-light: #f2f2f2;
+  --accent-color-dark: #cccccc;
+
+  /* Background Colors */
+  --background-color: linear-gradient(
+    135deg,
+    #4b0082,
+    #9400d3
+  ); /* Fortnite-inspired gradient */
+  --background-color-light: #6a0dad;
+  --background-color-dark: #2e0057;
+
+  /* Text Colors */
+  --text-color: #ffffff; /* White */
+  --text-color-light: #f2f2f2;
+  --text-color-dark: #cccccc;
+
+  /* Border Colors */
+  --border-color: #dcdcdc;
+  --border-color-light: #eaeaea;
+  --border-color-dark: #bfbfbf;
+
+  /* Font */
+  --font-family: "Burbank Big Condensed", sans-serif;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: var(--background-color);
+  font-family: var(--font-family);
+  color: var(--text-color);
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded bg-primary opacity-15;
+}
+
+body {
+  @apply text-text bg-background;
+}
+
+a {
+  @apply text-primary;
+}
+
+a:hover {
+  @apply text-primary-dark;
+}
+
+input {
+  @apply border border-border p-2 rounded-sm;
+}
+
+button {
+  @apply bg-primary text-accent p-2 rounded-sm min-w-24;
+}
+
+button:hover {
+  @apply bg-primary-dark;
+}
+
+h1 {
+  @apply text-2xl font-bold text-text;
+}
+
+h3 {
+  @apply text-xl font-semibold text-text;
+}
+
+:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+tr:nth-child(even) {
+  @apply bg-background-light;
+}
+
+tr:hover {
+  @apply bg-accent-dark;
 }

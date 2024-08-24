@@ -44,7 +44,7 @@ export default function RootLayout({
                 <BsTelegram className="text-3xl" />
               </a>
               <a
-                href="https://t.me/SunNite_TRX"
+                href="https://sunpump.meme/token/TLepEDCmQi3oyK9DnPHmqJaN5FW5zZjcEu"
                 target="_blank"
                 className="my-auto text-accent hover:text-accent-dark bg-secondary no-underline border h-12 w-24 text-center flex justify-center rounded-lg"
               >

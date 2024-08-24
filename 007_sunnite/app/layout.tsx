@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ToastContainer } from "react-toast";
+import { BsTelegram, BsTwitter } from "react-icons/bs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,8 +20,31 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex flex-col h-screen w-screen">
-          <div className="h-20 w-full flex justify-center shadow bg-primary">
+          <div className="h-20 w-full flex justify-between shadow bg-primary p-4">
             <h1 className="my-auto">Sun Nite</h1>
+            <div className="flex gap-4">
+              <a
+                className="my-auto text-accent hover:text-accent-dark"
+                target="_blank"
+                href=""
+              >
+                <BsTwitter className="text-3xl" />
+              </a>
+              <a
+                className="my-auto text-accent mr-2 hover:text-accent-dark"
+                target="_blank"
+                href=""
+              >
+                <BsTelegram className="text-3xl" />
+              </a>
+              <a
+                href="big-button"
+                target="_blank"
+                className="my-auto text-accent text-accent hover:text-accent-dark bg-secondary no-underline border h-12 w-24 text-center flex justify-center rounded-lg"
+              >
+                <div className="my-auto ">Buy Now</div>
+              </a>
+            </div>
           </div>
           <div className="h-full w-full overflow-auto p-8">{children}</div>
         </div>

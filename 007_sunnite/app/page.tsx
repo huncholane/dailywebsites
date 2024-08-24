@@ -8,13 +8,6 @@ export default function Home() {
   const contractAddress = "0x1234567890";
   return (
     <div>
-      <div className="w-full mb-2 justify-center flex gap-3">
-        <a className="big-button">Telegram</a>
-        <a className="big-button">Buy Now</a>
-      </div>
-      <div className="mb-8 w-full justify-center flex gap-3">
-        <a className="big-button">Twitter</a>
-      </div>
       <div className="flex w-full justify-center">
         <iframe
           width="315"

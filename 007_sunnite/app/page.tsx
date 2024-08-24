@@ -15,6 +15,15 @@ export default function Home() {
       <div className="mb-8 w-full justify-center flex gap-3">
         <a className="big-button">Twitter</a>
       </div>
+      <div className="flex w-full justify-center">
+        <iframe
+          width="315"
+          height="560"
+          src="https://www.youtube.com/embed/dNnSMY8qQ-I"
+          title="YouTube video player"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        ></iframe>
+      </div>
       <div className="mx-auto justify-center w-96">
         <div className="w-full text-center">Contract Address</div>
         <div className="h-12 bg-primary p-2 rounded border border-border flex">

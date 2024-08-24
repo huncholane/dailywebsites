@@ -138,7 +138,7 @@ tr:hover {
 }
 
 .sun-background {
-  background-image: url("/sun.webp");
+  background-image: url("/sun.jpeg");
   background-size: cover; /* Ensures the image covers the entire element */
   background-position: center; /* Centers the image */
   background-repeat: no-repeat; /* Prevents the image from repeating */

@@ -8,9 +8,9 @@ export default function Home() {
   const contractAddress = "0x1234567890";
   return (
     <div className="fortnite-background p-8">
-      <h1 className="w-full text-center">Sun Nite</h1>
+      <h1 className="w-full text-center">SunNite</h1>
       <h3 className="w-full text-center mb-7">
-        Official fortnite coin on Tron created by Soulja boy
+        Bringing you the funniest, most epic, legendary Fornite memes
       </h3>
       <div className="flex w-full justify-center mb-3">
         <iframe
@@ -36,7 +36,7 @@ export default function Home() {
       </div>
       <div className="mt-8">
         <h1 className="w-full text-center">Tokenomics</h1>
-        <h3 className="w-full text-center">No sales tax</h3>
+        <h3 className="w-full text-center">No sales tax, better than vbucks</h3>
       </div>
       <ToastContainer />
     </div>

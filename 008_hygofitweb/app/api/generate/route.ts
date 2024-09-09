@@ -10,11 +10,7 @@ const SCHEMA = z.object({
   data: z.array(
     z.object({
       name: z.string(),
-      sets: z.array(
-        z.object({
-          reps: z.number().int(),
-        })
-      ),
+      sets: z.array(z.number().int()),
     })
   ),
 });

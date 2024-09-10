@@ -35,7 +35,7 @@ export async function POST(request: Request) {
   }
 
   const muscleGroupsString = muscleGroups.join(", ");
-  const message = `Please create a workout in the style of ${athlete} with the following muscle groups: ${muscleGroupsString} that will take no more than ${duration} minutes to complete. Return a list of exercises in json format. Each exersie has a name and list of sets with reps.`;
+  const message = `Please create a workout in the style of ${athlete} with the following muscle groups: ${muscleGroupsString} that will take no more than ${duration} minutes to complete assuming it takes 3-5 minutes to complete one set depending on the difficulty of each exercise. Return a list of exercises in json format. Each exersie has a name and list of sets with reps.`;
   const openaiResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     response_format: zodResponseFormat(SCHEMA, "exercises"),

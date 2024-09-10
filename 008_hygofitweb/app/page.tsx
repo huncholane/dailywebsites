@@ -32,11 +32,7 @@ export default function Home() {
           <button className="mx-auto" type="submit">
             Send
           </button>
-          <ul>
-            {devices.map((device, i) => (
-              <li key={i}>{device}</li>
-            ))}
-          </ul>
+          <div>{`Sent to ${devices.length} devices`}</div>
         </form>
       ) : (
         <form

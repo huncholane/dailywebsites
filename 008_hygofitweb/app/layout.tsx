@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SignIn } from "@/components/auth/signin-button";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -23,12 +24,28 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const thisYear = new Date().getFullYear();
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="h-screen w-screen fixed border flex flex-col justify-between">
+          <div className="flex h-20 justify-between px-4 w-full border-b">
+            <div className="text-lg text-primary my-auto">HygoFit</div>
+            <div className="my-auto">
+              <SignIn />
+            </div>
+          </div>
+          <div className="overflow-y-auto h-full flex flex-col justify-between">
+            <div className="p-4">{children}</div>
+            <footer className="min-h-16 h-16 w-full border-t flex items-center justify-center bg-gray-100">
+              <p className="text-sm text-gray-600">
+                © {thisYear} HygoFit. All rights reserved.
+              </p>
+            </footer>
+          </div>
+        </div>
       </body>
     </html>
   );

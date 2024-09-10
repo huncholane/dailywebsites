@@ -1,17 +1,30 @@
 "use client";
 
+import axios from "axios";
 import { useState } from "react";
-import { verifyGuess } from "./actions";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const [isVerified, setIsVerified] = useState(false);
+  const [devices, setDevices] = useState([] as string[]);
+
   return (
     <div className="flex w-full justify-center h-full">
       {isVerified ? (
         <form
           className="flex flex-col gap-4"
-          action={() => {
+          action={async (formData) => {
             // Send a message to apn
+            try {
+              const response = await axios.post("/api/message", {
+                message: formData.get("message"),
+              });
+              const { deviceIds } = response.data;
+              toast.success("Message sent");
+              setDevices(deviceIds || []);
+            } catch {
+              toast.error("Failed to send message");
+            }
           }}
         >
           <h1 className="mx-auto">Send a message to the app users</h1>
@@ -19,12 +32,23 @@ export default function Home() {
           <button className="mx-auto" type="submit">
             Send
           </button>
+          <ul>
+            {devices.map((device, i) => (
+              <li key={i}>{device}</li>
+            ))}
+          </ul>
         </form>
       ) : (
         <form
           className="flex flex-col gap-4"
-          action={(formData) => {
-            verifyGuess(formData.get("guess") as string) && setIsVerified(true);
+          action={async (formData) => {
+            try {
+              await axios.post("/api/guess", { guess: formData.get("guess") });
+              toast.success("Correct guess");
+              setIsVerified(true);
+            } catch {
+              toast.error("Incorrect guess");
+            }
           }}
         >
           <h1 className="mx-auto">Guess the secret phrases</h1>

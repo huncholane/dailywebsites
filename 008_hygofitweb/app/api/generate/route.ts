@@ -6,7 +6,7 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const SCHEMA = z.object({
+const SCHEMA1 = z.object({
   data: z.array(
     z.object({
       name: z.string(),
@@ -15,34 +15,70 @@ const SCHEMA = z.object({
   ),
 });
 
+const SCHEMA2 = z.object({
+  data: z.array(
+    z.object({
+      name: z.string(),
+      sets: z.array(
+        z.object({
+          reps: z.number().int(),
+          unit: z.string(),
+          restSeconds: z.number().int(),
+          weight: z.string(),
+        })
+      ),
+    })
+  ),
+});
+
+const messageTemplate = `Please create a json list of exercises.
+The workout is inspired by the style of athlete.
+The workout should target the following muscle groups: muscleGroups.
+The workout should take no more than duration minutes to complete.`;
+
 export async function POST(request: Request) {
   const contentType = request.headers.get("Content-Type");
 
-  let athlete, muscleGroups, duration;
+  let athlete, muscleGroups, duration, version;
 
   if (contentType === "application/json") {
     const data = await request.json();
     athlete = data.athlete;
     muscleGroups = data.muscleGroups;
     duration = data.duration;
+    version = data.version || 1;
   } else if (contentType === "application/x-www-form-urlencoded") {
     const formData = await request.formData();
     athlete = formData.get("athlete");
     muscleGroups = formData.get("muscleGroups");
     duration = formData.get("duration");
+    version = formData.get("version") || 1;
   } else {
     throw new Error("Unsupported content type");
   }
 
+  let schema;
+  if (version === 1) {
+    schema = SCHEMA1;
+  } else if (version === 2) {
+    schema = SCHEMA2;
+  } else {
+    throw new Error("Unsupported version");
+  }
+
   const muscleGroupsString = muscleGroups.join(", ");
-  const message = `Please create a workout in the style of ${athlete} with the following muscle groups: ${muscleGroupsString} that will take no more than ${duration} minutes to complete assuming it takes 3-5 minutes to complete one set depending on the difficulty of each exercise. For example a 30 minute workout should only have a total of 6-10 sets. Return a list of exercises in json format. Each exersie has a name and list of sets with reps.`;
+  const message = messageTemplate
+    .replace("athlete", athlete)
+    .replace("muscleGroups", muscleGroupsString)
+    .replace("duration", duration);
+  console.log(message);
   const openaiResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",
-    response_format: zodResponseFormat(SCHEMA, "exercises"),
+    response_format: zodResponseFormat(schema, "exercises"),
     messages: [
       {
         role: "system",
-        content: "Please create exercises in json format.",
+        content: `You have studied the style of ${athlete} and are creating a workout inspired by their style.`,
       },
       {
         role: "user",

@@ -32,7 +32,8 @@ const SCHEMA2 = z.object({
 });
 
 const messageTemplate = `Please create a json list of exercises.
-The workout is inspired by the style of athlete.
+Each exercise should have at least 3 sets.
+Study workouts tagged with athlete and create a workout a inspired by the style of athlete.
 The workout should target the following muscle groups: muscleGroups.
 The workout should take no more than duration minutes to complete.`;
 

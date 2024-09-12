@@ -31,11 +31,17 @@ const SCHEMAS = [
     ),
   }),
   z.object({
+    difficulty: z.string(),
+    name: z.string(),
+    inspiration: z.string(),
+    durationMinutes: z.number().int(),
     data: z.array(
       z.object({
         name: z.string(),
         setStructure: z.string(),
         description: z.string(),
+        difficulty: z.string(),
+        durationMinutes: z.number().int(),
         sets: z.array(
           z.object({
             exercise: z.string(),
@@ -51,12 +57,11 @@ const SCHEMAS = [
   }),
 ];
 
-const messageTemplate = `Please create a json list of workouts.
-The workout should have a difficultyRating difficulty level.
-Make sure each workout has between 3 and 10 sets.
+const messageTemplate = `Please create a json list of exercise groups.
+The exercise group should have a difficultyRating difficulty level.
 Study workouts tagged with athlete and create a workout a inspired by the style of athlete. 
 Please take into account set structures like Pyramid Set, Reverse Pyramid Set, Drop Set, Super Slow Set, Cluster Set, Rest-Pause Set, 21s (Partial Reps), Straight Set, Superset, Giant Set.
-Note: If the workout is a superset, make sure each exercise an that superset has 3-10 sets.
+Assume each set takes 1 minute plus the rest period to complete.
 The workout should target the following muscle groups: muscleGroups.
 The workout should take no more than duration minutes to complete.`;
 

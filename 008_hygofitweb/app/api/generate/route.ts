@@ -6,41 +6,62 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const SCHEMA1 = z.object({
-  data: z.array(
-    z.object({
-      name: z.string(),
-      sets: z.array(z.number().int()),
-    })
-  ),
-});
-
-const SCHEMA2 = z.object({
-  data: z.array(
-    z.object({
-      name: z.string(),
-      sets: z.array(
-        z.object({
-          reps: z.number().int(),
-          unit: z.string(),
-          restSeconds: z.number().int(),
-          weight: z.string(),
-        })
-      ),
-    })
-  ),
-});
+const SCHEMAS = [
+  z.object({
+    data: z.array(
+      z.object({
+        name: z.string(),
+        sets: z.array(z.number().int()),
+      })
+    ),
+  }),
+  z.object({
+    data: z.array(
+      z.object({
+        name: z.string(),
+        sets: z.array(
+          z.object({
+            reps: z.number().int(),
+            unit: z.string(),
+            restSeconds: z.number().int(),
+            weight: z.string(),
+          })
+        ),
+      })
+    ),
+  }),
+  z.object({
+    data: z.array(
+      z.object({
+        name: z.string(),
+        setStructure: z.string(),
+        description: z.string(),
+        sets: z.array(
+          z.object({
+            exercise: z.string(),
+            reps: z.number().int(),
+            unit: z.string(),
+            restSeconds: z.number().int(),
+            weight: z.string(),
+            notes: z.string(),
+          })
+        ),
+      })
+    ),
+  }),
+];
 
 const messageTemplate = `Please create a json list of exercises.
-Each exercise should have at least 3 sets.
-Study workouts tagged with athlete and create a workout a inspired by the style of athlete.
+The workout should have a difficultyRating difficulty level.
+Study workouts tagged with athlete and create a workout a inspired by the style of athlete. 
+Please take into account set structures like Pyramid Set, Reverse Pyramid Set, Drop Set, Super Slow Set, Cluster Set, Rest-Pause Set, 21s (Partial Reps), Straight Set, Superset, Giant Set.
 The workout should target the following muscle groups: muscleGroups.
 The workout should take no more than duration minutes to complete.`;
 
 export async function POST(request: Request) {
   const contentType = request.headers.get("Content-Type");
 
-  let athlete, muscleGroups, duration, version;
+  let athlete, muscleGroups, duration, version, difficulty;
 
   if (contentType === "application/json") {
     const data = await request.json();
@@ -48,30 +69,26 @@ export async function POST(request: Request) {
     muscleGroups = data.muscleGroups;
     duration = data.duration;
     version = data.version || 1;
+    difficulty = data.difficulty;
   } else if (contentType === "application/x-www-form-urlencoded") {
     const formData = await request.formData();
     athlete = formData.get("athlete");
     muscleGroups = formData.get("muscleGroups");
     duration = formData.get("duration");
     version = formData.get("version") || 1;
+    difficulty = formData.get("difficulty");
   } else {
     throw new Error("Unsupported content type");
   }
 
-  let schema;
-  if (version === 1) {
-    schema = SCHEMA1;
-  } else if (version === 2) {
-    schema = SCHEMA2;
-  } else {
-    throw new Error("Unsupported version");
-  }
+  const schema = SCHEMAS[version - 1];
 
   const muscleGroupsString = muscleGroups.join(", ");
   const message = messageTemplate
     .replace("athlete", athlete)
     .replace("muscleGroups", muscleGroupsString)
-    .replace("duration", duration);
+    .replace("duration", duration)
+    .replace("difficultyRating", difficulty);
   console.log(message);
   const openaiResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",

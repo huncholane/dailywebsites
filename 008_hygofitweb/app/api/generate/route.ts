@@ -56,6 +56,7 @@ The workout should have a difficultyRating difficulty level.
 Make sure each exercise has between 3 and 10 sets.
 Study workouts tagged with athlete and create a workout a inspired by the style of athlete. 
 Please take into account set structures like Pyramid Set, Reverse Pyramid Set, Drop Set, Super Slow Set, Cluster Set, Rest-Pause Set, 21s (Partial Reps), Straight Set, Superset, Giant Set.
+Note: If it is a superset, make sure each exercise an that superset has 3-10 sets.
 The workout should target the following muscle groups: muscleGroups.
 The workout should take no more than duration minutes to complete.`;
 

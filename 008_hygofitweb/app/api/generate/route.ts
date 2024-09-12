@@ -61,9 +61,8 @@ const messageTemplate = `Please create a json list of exercise groups.
 The exercise group should have a difficultyRating difficulty level.
 Study workouts tagged with athlete and create a workout a inspired by the style of athlete. 
 Please take into account set structures like Pyramid Set, Reverse Pyramid Set, Drop Set, Super Slow Set, Cluster Set, Rest-Pause Set, 21s (Partial Reps), Straight Set, Superset, Giant Set.
-Assume each set takes 1 minute plus the rest period to complete.
-The workout should target the following muscle groups: muscleGroups.
-The workout should take no more than duration minutes to complete.`;
+Make sure the sum of durationMinutes for all exercises adds up to DURATION minutes.
+The workout should target the following muscle groups: muscleGroups.`;
 
 export async function POST(request: Request) {
   const contentType = request.headers.get("Content-Type");
@@ -94,7 +93,7 @@ export async function POST(request: Request) {
   const message = messageTemplate
     .replace("athlete", athlete)
     .replace("muscleGroups", muscleGroupsString)
-    .replace("duration", duration)
+    .replace("DURATION", duration)
     .replace("difficultyRating", difficulty);
   console.log(message);
   const openaiResponse = await openai.chat.completions.create({

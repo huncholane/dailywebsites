@@ -1,6 +1,5 @@
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod.mjs";
-import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
 import { z } from "zod";
 
 const openai = new OpenAI({
@@ -103,26 +102,25 @@ export async function POST(request: Request) {
     .replace("DURATION", duration)
     .replace("difficultyRating", difficulty);
   console.log(message);
-  const messages: ChatCompletionMessageParam[] = [
-    {
-      role: "system",
-      content: `You have studied the style of ${athlete} and are creating a workout inspired by their style.`,
-    },
-    {
-      role: "user",
-      content: [
-        {
-          type: "text",
-          text: message,
-        },
-      ],
-    },
-  ];
 
   const openaiResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     response_format: zodResponseFormat(schema, "exercises"),
-    messages: messages,
+    messages: [
+      {
+        role: "system",
+        content: `You have studied the style of ${athlete} and are creating a workout inspired by their style.`,
+      },
+      {
+        role: "user",
+        content: [
+          {
+            type: "text",
+            text: message,
+          },
+        ],
+      },
+    ],
   });
   const content = openaiResponse.choices[0].message.content;
 

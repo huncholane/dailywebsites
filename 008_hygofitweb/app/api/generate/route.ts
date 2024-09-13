@@ -6,6 +6,19 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
+const SET_LIST_DESCRIPTION = `A collection of exercise sets defined by the following set structures:
+
+- Pyramid Set: Involves multiple sets of the same exercise, starting with lighter weights and higher reps, progressing to heavier weights and fewer reps.
+- Reverse Pyramid Set: Begins with the heaviest weight and lowest reps, then reduces weight and increases reps in subsequent sets.
+- Drop Set: After reaching failure with a certain weight, the weight is decreased and the exercise is continued without rest.
+- Super Slow Set: Focuses on very slow repetitions to increase time under tension, typically with a single set of an exercise.
+- Cluster Set: A single exercise is performed in smaller clusters with short rest periods in between, allowing for heavier weights.
+- Rest-Pause Set: A set performed to failure, followed by short rests before continuing the same exercise with the same weight.
+- 21s (Partial Reps): Involves partial and full reps, typically 7 reps in the lower range, 7 in the upper range, and 7 full reps, for a total of 21 reps.
+- Straight Set: Consists of a consistent number of reps and sets for one exercise, without changing the weight or rep scheme.
+- Superset: Two exercises are performed back-to-back without rest in between, either targeting the same or opposing muscle groups.
+- Giant Set: Four or more exercises are performed consecutively with minimal rest, usually targeting the same muscle group.`;
+
 const SCHEMAS = [
   z.object({
     data: z.array(
@@ -41,7 +54,18 @@ const SCHEMAS = [
     data: z.array(
       z.object({
         name: z.string().describe("A creative name for the exercise group"),
-        setStructure: z.string(),
+        setStructure: z.enum([
+          "Pyramid Set",
+          "Reverse Pyramid Set",
+          "Drop Set",
+          "Super Slow Set",
+          "Cluster Set",
+          "Rest-Pause Set",
+          "21s (Partial Reps)",
+          "Straight Set",
+          "Superset",
+          "Giant Set",
+        ]),
         description: z.string(),
         difficulty: z.string(),
         durationMinutes: z
@@ -59,14 +83,15 @@ const SCHEMAS = [
                   "Make the number of reps 69 if it is meant to go to failure"
                 ),
               unit: z.enum(["reps", "seconds"]),
-              restSeconds: z.number().int(),
+              restSeconds: z
+                .number()
+                .int()
+                .describe("The rest time in seconds. 0 if no rest"),
               weight: z.string(),
               notes: z.string(),
             })
           )
-          .describe(
-            "A series of sets that make up the exercise group defined by the set structure"
-          ),
+          .describe(SET_LIST_DESCRIPTION),
       })
     ),
   }),

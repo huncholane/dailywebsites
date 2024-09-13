@@ -130,9 +130,12 @@ export async function POST(request: Request) {
   if (content) {
     try {
       const data = JSON.parse(content);
-      const actualDuration = data.data.reduce((acc: number, group) => {
-        return acc + group.durationMinutes;
-      }, 0);
+      const actualDuration = data.data.reduce(
+        (acc: number, group: { durationMinutes: number }) => {
+          return acc + group.durationMinutes;
+        },
+        0
+      );
       console.log(
         `Actual duration: ${actualDuration}, Expected duration: ${duration}`
       );

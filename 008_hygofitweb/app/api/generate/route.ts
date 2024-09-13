@@ -17,7 +17,9 @@ const SET_LIST_DESCRIPTION = `A collection of exercise sets defined by the follo
 - 21s (Partial Reps): Involves partial and full reps, typically 7 reps in the lower range, 7 in the upper range, and 7 full reps, for a total of 21 reps.
 - Straight Set: Consists of a consistent number of reps and sets for one exercise, without changing the weight or rep scheme.
 - Superset: Two exercises are performed back-to-back without rest in between, either targeting the same or opposing muscle groups.
-- Giant Set: Four or more exercises are performed consecutively with minimal rest, usually targeting the same muscle group.`;
+- Giant Set: Four or more exercises are performed consecutively with minimal rest, usually targeting the same muscle group.
+- Heavy Set: A single set of one exercise performed with a heavy weight, typically for lower reps.
+- Light Set: A single set of one exercise performed with a light weight, typically for higher reps.`;
 
 const SCHEMAS = [
   z.object({
@@ -65,6 +67,8 @@ const SCHEMAS = [
           "Straight Set",
           "Superset",
           "Giant Set",
+          "Heavy Set",
+          "Light Set",
         ]),
         description: z.string(),
         difficulty: z.string(),

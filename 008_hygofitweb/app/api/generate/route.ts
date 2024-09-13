@@ -125,6 +125,20 @@ export async function POST(request: Request) {
     messages: messages,
   });
   const content = openaiResponse.choices[0].message.content;
+
+  // Log the duration vs the sum of the exercise durations
+  if (content) {
+    try {
+      const data = JSON.parse(content);
+      const actualDuration = data.data.reduce((acc: number, group) => {
+        return acc + group.durationMinutes;
+      }, 0);
+      console.log(
+        `Actual duration: ${actualDuration}, Expected duration: ${duration}`
+      );
+    } catch {}
+  }
+
   return new Response(content, {
     headers: {
       "content-type": "application/json",

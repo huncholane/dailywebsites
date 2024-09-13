@@ -48,16 +48,25 @@ const SCHEMAS = [
           .number()
           .int()
           .describe("The duration of the exercise group in minutes"),
-        sets: z.array(
-          z.object({
-            exercise: z.string(),
-            reps: z.number().int(),
-            unit: z.enum(["reps", "seconds"]),
-            restSeconds: z.number().int(),
-            weight: z.string(),
-            notes: z.string(),
-          })
-        ),
+        sets: z
+          .array(
+            z.object({
+              exercise: z.string(),
+              reps: z
+                .number()
+                .int()
+                .describe(
+                  "Make the number of reps 69 if it is meant to go to failure"
+                ),
+              unit: z.enum(["reps", "seconds"]),
+              restSeconds: z.number().int(),
+              weight: z.string(),
+              notes: z.string(),
+            })
+          )
+          .describe(
+            "A series of sets that make up the exercise group defined by the set structure"
+          ),
       })
     ),
   }),

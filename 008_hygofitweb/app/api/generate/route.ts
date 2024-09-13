@@ -8,18 +8,18 @@ const openai = new OpenAI({
 
 const SET_LIST_DESCRIPTION = `A collection of exercise sets defined by the following set structures:
 
-- Pyramid Set: Only involves one exercise, starting with lighter weights and higher reps, progressing to heavier weights and fewer reps.
-- Reverse Pyramid Set: Only involves one exercise. Begins with the heaviest weight and lowest reps, then reduces weight and increases reps in subsequent sets.
-- Drop Set: Only involves one exercise. After reaching failure with a certain weight, the weight is decreased and the exercise is continued without rest.
-- Super Slow Set: Focuses on very slow repetitions to increase time under tension, typically with a single set of an exercise.
-- Cluster Set: A single exercise is performed in smaller clusters with short rest periods in between, allowing for heavier weights.
-- Rest-Pause Set: A set performed to failure, followed by short rests before continuing the same exercise with the same weight.
-- 21s (Partial Reps): Involves partial and full reps, typically 7 reps in the lower range, 7 in the upper range, and 7 full reps, for a total of 21 reps.
-- Straight Set: Consists of a consistent number of reps and sets for one exercise, without changing the weight or rep scheme.
-- Superset: Two exercises are performed back-to-back without rest in between, either targeting the same or opposing muscle groups.
-- Giant Set: Four or more exercises are performed consecutively with minimal rest, usually targeting the same muscle group.
-- Heavy Set: A single set of one exercise performed with a heavy weight, typically for lower reps.
-- Light Set: A single set of one exercise performed with a light weight, typically for higher reps.`;
+- Pyramid Set: Only involves one exercise, starting with lighter weights and higher reps, progressing to heavier weights and fewer reps. The list will only have one exercise.
+- Reverse Pyramid Set: Only involves one exercise. Begins with the heaviest weight and lowest reps, then reduces weight and increases reps in subsequent sets. The list will only have one exercise.
+- Drop Set: Only involves one exercise. After reaching failure with a certain weight, the weight is decreased and the exercise is continued without rest. The list will only have one exercise.
+- Super Slow Set: Focuses on very slow repetitions to increase time under tension, typically with a single set of an exercise. There will only be one set.
+- Cluster Set: A single exercise is performed in smaller clusters with short rest periods in between, allowing for heavier weights. There will only be one set.
+- Rest-Pause Set: A set performed to failure, followed by short rests before continuing the same exercise with the same weight. There will only be one set.
+- 21s (Partial Reps): Involves partial and full reps, typically 7 reps in the lower range, 7 in the upper range, and 7 full reps, for a total of 21 reps. There will only be one set.
+- Straight Set: Consists of a consistent number of reps and sets for one exercise, without changing the weight or rep scheme. There will only be one set.
+- Superset: Two exercises are performed back-to-back without rest in between, either targeting the same or opposing muscle groups. There will be two exercises.
+- Giant Set: Four or more exercises are performed consecutively with minimal rest, usually targeting the same muscle group. There will be multiple exercises.
+- Heavy Set: A single set of one exercise performed with a heavy weight, typically for lower reps. There will only be one set.
+- Light Set: A single set of one exercise performed with a light weight, typically for higher reps. There will only be one set.`;
 
 const SCHEMAS = [
   z.object({
@@ -52,7 +52,9 @@ const SCHEMAS = [
     durationMinutes: z
       .number()
       .int()
-      .describe("The sum of the duration of all exercise groups in minutes"),
+      .describe(
+        "The total duration of all the exercise groups in minutes. Add up durationMinutes for all exercise groups"
+      ),
     data: z.array(
       z.object({
         name: z.string().describe("A creative name for the exercise group"),
@@ -90,9 +92,15 @@ const SCHEMAS = [
               restSeconds: z
                 .number()
                 .int()
-                .describe("The rest time in seconds. 0 if no rest"),
+                .describe(
+                  "The rest time in seconds. 0 if no rest. Only the last set should have a rest on supersets, giant sets, and drop sets."
+                ),
               weight: z.string(),
               notes: z.string(),
+              untilFailure: z
+                .boolean()
+                .optional()
+                .describe("If true, go to failure"),
             })
           )
           .describe(SET_LIST_DESCRIPTION),
@@ -130,6 +138,7 @@ export async function POST(request: Request) {
   } else {
     throw new Error("Unsupported content type");
   }
+  console.log("Using version", version);
 
   const schema = SCHEMAS[version - 1];
 

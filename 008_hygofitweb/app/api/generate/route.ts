@@ -1,5 +1,6 @@
 import OpenAI from "openai";
 import { zodResponseFormat } from "openai/helpers/zod.mjs";
+import { ChatCompletionMessageParam } from "openai/src/resources/index.js";
 import { z } from "zod";
 
 const openai = new OpenAI({
@@ -34,19 +35,25 @@ const SCHEMAS = [
     difficulty: z.string(),
     name: z.string(),
     inspiration: z.string(),
-    durationMinutes: z.number().int(),
+    durationMinutes: z
+      .number()
+      .int()
+      .describe("The sum of the duration of all exercise groups in minutes"),
     data: z.array(
       z.object({
-        name: z.string(),
+        name: z.string().describe("A creative name for the exercise group"),
         setStructure: z.string(),
         description: z.string(),
         difficulty: z.string(),
-        durationMinutes: z.number().int(),
+        durationMinutes: z
+          .number()
+          .int()
+          .describe("The duration of the exercise group in minutes"),
         sets: z.array(
           z.object({
             exercise: z.string(),
             reps: z.number().int(),
-            unit: z.string(),
+            unit: z.enum(["reps", "seconds"]),
             restSeconds: z.number().int(),
             weight: z.string(),
             notes: z.string(),
@@ -96,24 +103,26 @@ export async function POST(request: Request) {
     .replace("DURATION", duration)
     .replace("difficultyRating", difficulty);
   console.log(message);
+  const messages: ChatCompletionMessageParam[] = [
+    {
+      role: "system",
+      content: `You have studied the style of ${athlete} and are creating a workout inspired by their style.`,
+    },
+    {
+      role: "user",
+      content: [
+        {
+          type: "text",
+          text: message,
+        },
+      ],
+    },
+  ];
+
   const openaiResponse = await openai.chat.completions.create({
     model: "gpt-4o-mini",
     response_format: zodResponseFormat(schema, "exercises"),
-    messages: [
-      {
-        role: "system",
-        content: `You have studied the style of ${athlete} and are creating a workout inspired by their style.`,
-      },
-      {
-        role: "user",
-        content: [
-          {
-            type: "text",
-            text: message,
-          },
-        ],
-      },
-    ],
+    messages: messages,
   });
   const content = openaiResponse.choices[0].message.content;
   return new Response(content, {

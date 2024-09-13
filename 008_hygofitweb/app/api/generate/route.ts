@@ -8,9 +8,9 @@ const openai = new OpenAI({
 
 const SET_LIST_DESCRIPTION = `A collection of exercise sets defined by the following set structures:
 
-- Pyramid Set: Involves multiple sets of the same exercise, starting with lighter weights and higher reps, progressing to heavier weights and fewer reps.
-- Reverse Pyramid Set: Begins with the heaviest weight and lowest reps, then reduces weight and increases reps in subsequent sets.
-- Drop Set: After reaching failure with a certain weight, the weight is decreased and the exercise is continued without rest.
+- Pyramid Set: Involves multiple sets of only one exercise, starting with lighter weights and higher reps, progressing to heavier weights and fewer reps.
+- Reverse Pyramid Set: Multiple sets of only one exercise. Begins with the heaviest weight and lowest reps, then reduces weight and increases reps in subsequent sets.
+- Drop Set: Multiple sets of only one exercise. After reaching failure with a certain weight, the weight is decreased and the exercise is continued without rest.
 - Super Slow Set: Focuses on very slow repetitions to increase time under tension, typically with a single set of an exercise.
 - Cluster Set: A single exercise is performed in smaller clusters with short rest periods in between, allowing for heavier weights.
 - Rest-Pause Set: A set performed to failure, followed by short rests before continuing the same exercise with the same weight.

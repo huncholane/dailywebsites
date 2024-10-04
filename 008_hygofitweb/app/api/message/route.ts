@@ -6,7 +6,11 @@ export async function POST(request: Request) {
   const { message } = await request.json();
   const devices = await prisma.device.findMany();
   const notifications = devices.map((device) => {
-    return new Notification(device.id, { alert: message, badge: 1 });
+    return new Notification(device.id, {
+      alert: message,
+      badge: 1,
+      sound: "MoneyTime.caf",
+    });
   });
   apns2.sendMany(notifications);
   console.log(devices);

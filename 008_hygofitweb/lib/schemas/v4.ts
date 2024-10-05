@@ -23,7 +23,7 @@ export const v4 = z.object({
     .number()
     .int()
     .describe(
-      "The total duration of all the exercise groups in minutes. Add up durationMinutes for all exercise groups"
+      "The total duration of all the exercise groups in minutes. The durationMinutes of all exercise groups must add up exactly to this value."
     ),
   data: z.array(
     z.object({
@@ -66,7 +66,7 @@ export const v4 = z.object({
               .describe(
                 "The rest time in seconds. 0 if no rest. Only the last set should have a rest on supersets, giant sets, and drop sets."
               ),
-            weight: z.string(),
+            weight: z.enum(["light", "medium", "heavy", "max", "bodyweight"]),
             notes: z.string(),
           })
         )

@@ -67,6 +67,7 @@ export async function POST(request: Request) {
   if (content) {
     try {
       const data = JSON.parse(content);
+      console.log(data);
       const actualDuration = data.data.reduce(
         (acc: number, group: { durationMinutes: number }) => {
           return acc + group.durationMinutes;

@@ -64,7 +64,7 @@ export const v4 = z.object({
               .number()
               .int()
               .describe(
-                "The rest time in seconds. 0 if no rest. Only the last set should have a rest on supersets, giant sets, and drop sets."
+                "The rest time in seconds. The last set in the exercise group must always have a rest time greater than 0."
               ),
             weight: z.enum(["light", "medium", "heavy", "max", "bodyweight"]),
             notes: z.string(),

@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Location {
+  id          String   @id @default(cuid())
+  city        String
+  country     String
+  foundedDate DateTime // When the city was founded.
+  churches    Church[]
+}
+
+model Church {
+  id          String       @id @default(cuid())
+  name        String       @unique // Name of the church.
+  foundedDate DateTime // When the church was founded.
+  Ordination  Ordination[] // Oridinations made in the church.
+  Location    Location?    @relation(fields: [locationId], references: [id]) // Location of the church.
+  locationId  String?
+}
+
+model Deacon {
+  id   String @id @default(cuid())
+  name String
+
+  Ordination Ordination[]
+}
+
+model Ordination {
+  id       String   @id @default(cuid())
+  date     DateTime
+  church   Church   @relation(fields: [churchId], references: [id])
+  churchId String
+  deacon   Deacon   @relation(fields: [deaconId], references: [id])
+  deaconId String
+
+  @@map("Ordination")
+}

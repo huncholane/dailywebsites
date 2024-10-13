@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Primary Colors */
+  --primary-color: #b8860b; /* Gold (Symbol of divinity and sanctity) */
+  --primary-color-light: #d4af37;
+  --primary-color-dark: #8b6508;
+
+  /* Secondary Colors */
+  --secondary-color: #6a0dad; /* Purple (Symbol of penance and royalty) */
+  --secondary-color-light: #9370db;
+  --secondary-color-dark: #4b0082;
+
+  /* Accent Colors */
+  --accent-color: #ffffff; /* White (Symbol of purity and light) */
+  --accent-color-light: #f9f9f9;
+  --accent-color-dark: #e0e0e0;
+
+  /* Background Colors */
+  --background-color: #f4f4f4; /* Light Gray (Neutral backdrop for sacred elements) */
+  --background-color-light: #fafafa;
+  --background-color-dark: #e6e6e6;
+
+  /* Text Colors */
+  --text-color: #333333; /* Dark Gray/Black (Symbol of seriousness and reflection) */
+  --text-color-light: #666666;
+  --text-color-dark: #1a1a1a;
+
+  /* Border Colors */
+  --border-color: #bdb76b; /* Light Gold */
+  --border-color-light: #d7d7a0;
+  --border-color-dark: #8f8f47;
+}
+
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply rounded bg-primary opacity-15;
+}
+
+body {
+  @apply text-text bg-background;
+}
+
+a {
+  @apply text-primary;
+}
+
+a:hover {
+  @apply text-primary-dark;
+}
+
+input {
+  @apply border border-border p-2 rounded-sm;
+}
+
+button {
+  @apply bg-primary text-accent p-2 rounded-sm min-w-24;
+}
+
+button:hover {
+  @apply bg-primary-dark;
+}
+
+h1 {
+  @apply text-2xl font-bold text-text;
+}
+
+h3 {
+  @apply text-xl font-semibold text-text;
+}
+
+:disabled {
+  @apply cursor-not-allowed opacity-50;
+}
+
+tr:nth-child(even) {
+  @apply bg-background-light;
+}
+
+tr:hover {
+  @apply bg-accent-dark;
+}
